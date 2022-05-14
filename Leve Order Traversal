@@ -1,0 +1,32 @@
+  
+  
+  // Level Order Traversal in Binary Tree
+  vector<vector<int>> levelOrder(TreeNode* root) {
+        
+        if(root==NULL){ 
+            vector<vector<int>>v;
+            return v;
+        }
+        queue<TreeNode*>q;
+        vector<vector<int>>v;
+        q.push(root);
+        while(q.size()>0){
+            int s=q.size();
+            vector<int>a;
+            while(s-->0){
+                TreeNode* e=q.front();
+                a.push_back(e->val);
+                q.pop();
+                if(e->left!=NULL){
+                    q.push(e->left);
+                }
+                if(e->right!=NULL){
+                    q.push(e->right);
+                }
+                
+            }
+            v.push_back(a);
+        }
+        return v;
+    }
+};
