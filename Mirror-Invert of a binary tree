@@ -1,0 +1,12 @@
+// mirror of a binary tree
+
+ TreeNode* invertTree(TreeNode* root) {
+        if(root==NULL) return NULL;
+        TreeNode*temp=root->right;
+      TreeNode*t1=   invertTree(temp);
+        TreeNode*t2= invertTree(root->left);
+        root->right=t2;
+        root->left=t1;
+        return root;
+        
+    }
