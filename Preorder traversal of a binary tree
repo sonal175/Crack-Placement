@@ -1,0 +1,44 @@
+// Preorder traversal of a binary tree
+// Recursive Approach
+
+void preorder(TreeNode* root, vector<int>&v){
+        if(root==NULL) return;
+        v.push_back(root->val);
+        preorder(root->left,v);
+        preorder(root->right,v);
+       return;
+    }
+    vector<int> preorderTraversal(TreeNode* root) {
+        if(root==NULL){
+            vector<int>v;
+            return v;
+        }
+        vector<int>v;
+        preorder(root,v);
+        return v;
+    }
+   
+   
+   // Iterative Approach
+   vector<int> preorderTraversal(TreeNode* root) {
+        if(root==NULL){
+            vector<int>v;
+            return v;
+        }
+        vector<int>v;
+        stack<TreeNode*>s;
+        s.push(root);
+        while(s.size()>0){
+            TreeNode * node=s.top();
+            s.pop();
+            v.push_back(node->val);
+            if(node->right!=NULL){
+                s.push(node->right);
+            }
+            if(node->left!=NULL){
+                s.push(node->left);
+            }
+            
+        }
+        return v;
+    }
