@@ -1,0 +1,27 @@
+// Right View of a Binary Tree
+
+// Recursive Approach
+
+void right(TreeNode * root,int level,vector<int>&v){
+    if(root==NULL) return ;
+    if(level==v.size()){
+        v.push_back(root->val);
+    }
+    right(root->right,level+1,v);
+    right(root->left,level+1,v);
+    return;
+}
+
+vector<int> rightSideView(TreeNode *root)
+{
+   if(root==NULL) {
+       vector<int>v;
+       return v;
+   }
+   vector<int>v;
+   right(root,0,v);
+   return v;
+   
+}
+// Iterative Approach
+using level order traversal
