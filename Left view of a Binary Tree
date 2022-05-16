@@ -1,0 +1,29 @@
+//Left view of a Binary tree
+
+//Recursive Approach
+
+void left(Node * root,int level,vector<int>&v){
+    if(root==NULL) return ;
+    if(level==v.size()){
+        v.push_back(root->data);
+    }
+    left(root->left,level+1,v);
+    left(root->right,level+1,v);
+    return;
+}
+
+vector<int> leftView(Node *root)
+{
+   if(root==NULL) {
+       vector<int>v;
+       return v;
+   }
+   vector<int>v;
+   left(root,0,v);
+   return v;
+   
+}
+
+
+// Iterative Approach
+Using level order traversal
