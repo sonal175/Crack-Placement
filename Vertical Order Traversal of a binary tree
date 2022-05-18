@@ -1,0 +1,36 @@
+// Vertical Order traversal of a binary tree
+
+ vector<vector<int>> verticalTraversal(TreeNode* root) {
+        queue<pair<TreeNode*,pair<int,int>>>q;
+        map<int,map<int,multiset<int>>>m;
+        pair<TreeNode*,pair<int,int>>p;
+        p.first=root;
+        p.second.first=0;
+        p.second.second=0;
+        q.push(p);
+        while(q.size()>0){
+            pair<TreeNode*,pair<int,int>>s=q.front();
+            q.pop();
+            TreeNode*n=s.first;
+            int x=s.second.first;
+            int y=s.second.second;
+            m[x][y].insert(n->val);
+            if(n->left!=NULL){
+                q.push({n->left,{x-1,y+1}});
+            }
+            if(n->right!=NULL){
+                q.push({n->right,{x+1,y+1}});
+            }
+        }
+        vector<vector<int>>ans;
+        for(auto a:m){
+            vector<int>col;
+            for(auto k: a.second){
+                col.insert(col.end(),k.second.begin(),k.second.end());
+            }
+            ans.push_back(col);
+
+        }
+        return ans;
+    }
+};
