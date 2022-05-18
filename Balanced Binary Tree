@@ -1,0 +1,28 @@
+// Balanced Binary tree
+
+pair<int,bool> balance(TreeNode* root){
+        if(root==NULL){
+            pair<int,bool>p;
+            p.first=0;
+            p.second=true;
+            return p;
+        }
+        pair<int,bool>l=balance(root->left);
+        pair<int,bool>r=balance(root->right);
+        int h=max(l.first,r.first)+1;
+        bool f;
+        if(abs(l.first-r.first)<=1 && l.second==true && r.second==true){
+            f=true;
+        }else{
+            f=false;
+        }
+        pair<int,bool>ans;
+        ans.first=h;
+        ans.second=f;
+        return ans;
+    }
+    bool isBalanced(TreeNode* root) {
+        if(root==NULL) return true;
+        pair<int,bool>p=balance(root);
+        return p.second;
+    }
