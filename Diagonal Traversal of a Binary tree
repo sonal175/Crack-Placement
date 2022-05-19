@@ -1,0 +1,26 @@
+// Diagonal traversal of a binary tree
+
+vector<int> diagonal(Node *root)
+{
+   // your code here
+   queue<Node*>q;
+   vector<int>v;
+   q.push(root);
+   while(q.size()>0){
+       Node * n=q.front();
+       q.pop();
+       v.push_back(n->data);
+       if(n->left!=NULL){
+           q.push(n->left);
+       }
+       while(n->right!=NULL){
+           if(n->right->left!=NULL){
+               q.push(n->right->left);
+           }
+           v.push_back(n->right->data);
+           n=n->right;
+          
+       }
+   }
+   return v;
+}
