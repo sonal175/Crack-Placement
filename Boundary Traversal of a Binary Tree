@@ -1,0 +1,78 @@
+// Boundary Traversal of a binary tree ( anti-clockwise)
+// clockwise can be easily done by doing some changes in this code
+
+
+bool leaf(Node*root){
+       if(root->left==NULL && root->right==NULL){
+           return true;
+       }else{
+           return false;
+       }
+   }
+   
+void addleft(Node * root,vector<int>&v){
+    Node * curr=root->left;
+    
+    while(curr!=NULL){
+        if(leaf(curr)==false){
+        v.push_back(curr->data);
+        }
+        if(curr->left!=NULL){
+            curr=curr->left;
+        }else{
+            curr=curr->right;
+        }
+    }
+}
+void addl(Node*root,vector<int>&v){
+    if(root==NULL){
+        return;
+    }
+    if(leaf(root)==true){
+        v.push_back(root->data);
+        return;
+    }
+    addl(root->left,v);
+    addl(root->right,v);
+}
+void addright(Node *root,vector<int> &v){
+    Node * curr=root->right;
+    vector<int>temp;
+    while(curr!=NULL){
+        if(leaf(curr)==false){
+            temp.push_back(curr->data);
+        }
+        if(curr->right!=NULL){
+            curr=curr->right;
+        }else{
+            curr=curr->left;
+        }
+    }
+    for(int i=temp.size()-1;i>=0;i--){
+        v.push_back(temp[i]);
+    }
+}
+   
+    vector <int> boundary(Node *root)
+    {
+        //Your code here
+        if(root==NULL) {
+            vector<int>v;
+            return v;
+        }
+        if(leaf(root)==false){
+            vector<int>v;
+            v.push_back(root->data);
+            addleft(root,v);
+            addl(root,v);
+            addright(root,v);
+            return v;
+            
+        }
+            vector<int>v;
+            v.push_back(root->data);
+            return v;
+        
+    }
+};
+
