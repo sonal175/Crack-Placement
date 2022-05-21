@@ -1,0 +1,54 @@
+// Construct binary tree from string with bracket representation
+
+ TreeNode * str(string &s, int &st){
+         if(st>=s.length()){
+             return NULL;
+         }
+         bool n=false;
+         if(s[s]=='-'){
+             n=true;
+             st++;
+         }
+         int num=0;
+         while(st<s.length() && (s[st]-'0')>=0 && (s[st]-'0')<=9){
+             int d=s[st]-'0';
+             num=num*10+d;
+             st++;
+         }
+         if(num==true)  num=-1*num;
+         TreeNode* root=new TreeNode*(num);
+         if(st>=s.length()){
+             return root;
+
+         }
+         if(st<s.length() && s[st]=='('){
+             st++;
+             root->left =str(s,st);
+         }
+         if(st<s.length() && s[st]==')'){
+             st++;
+             return root;
+         }
+         if(st<s.length() && s[st]=='('){
+             st++;
+             root->right =str(s,st);
+         }
+         if(st<s.length() && s[st]==')'){
+             st++;
+             return root;
+         }
+         return root;
+
+     }
+    TreeNode* str2tree(string &s) {
+        // write your code here
+        if(s.length()==0){
+            return NULL;
+        }
+        int st=0;
+        return str(s,st);
+
+
+
+    }
+};
