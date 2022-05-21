@@ -1,0 +1,19 @@
+// Transform Binary tree into sum tree
+
+int solve(Node* root){
+        if(root==NULL){
+            return 0;
+        }
+        int l=solve(root->left);
+        int r=solve(root->right);
+        int v=root->data;
+        root->data=l+r;
+        int f=(l+r)+v;
+        return f;
+        
+    }
+    void toSumTree(Node *node)
+    {
+        // Your code here
+        solve(node);
+    }
