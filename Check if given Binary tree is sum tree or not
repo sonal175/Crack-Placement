@@ -1,0 +1,37 @@
+// Check if given Binary tree is Sum tree or not
+
+pair<int,bool> sum(Node * root){
+        if(root==NULL){
+            pair<int,int>a;
+            a.first=0;
+            a.second=true;
+            return a;
+        }
+        
+        if(root->left==NULL && root->right==NULL){
+            pair<int,bool>a;
+            a.first=root->data;
+            a.second=true;
+            return a;
+        }
+        pair<int,bool>l=sum(root->left);
+        pair<int,bool>r=sum(root->right);
+        int f=l.first+r.first+root->data;
+        bool val;
+        if(l.first+r.first==root->data && l.second==true && r.second==true){
+            val=true;
+        }else{
+            val=false;
+        }
+        pair<int,bool>ans;
+        ans.first=f;
+        ans.second=val;
+        return ans;
+    }
+    bool isSumTree(Node* root)
+    {
+         // Your code here
+         if(root==NULL) return true;
+         pair<int,bool>a=sum(root);
+         return a.second;
+    }
