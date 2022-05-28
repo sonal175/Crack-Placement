@@ -1,0 +1,30 @@
+// Check if all leaves are at same level  
+
+
+void leaf(Node*root,int &ma,int h,int &ans){
+        if(root==NULL) return;
+        if(ans==0) return ;
+        if(root->left==NULL && root->right==NULL){
+            if(ma==-1){
+                ma=h;
+            }else{
+                if(ma!=h){
+                    ans=0;
+                    
+                }
+            }
+            return;
+        }
+        leaf(root->left,ma,h+1,ans);
+        leaf(root->right,ma,h+1,ans);
+    }
+    bool check(Node *root)
+    {
+        //Your code here
+        int ans=1;
+        int h=0;
+        int ma=-1;
+        leaf(root,ma,h,ans);
+        return ans;
+        
+    }
