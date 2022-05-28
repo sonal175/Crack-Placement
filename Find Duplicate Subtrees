@@ -1,0 +1,34 @@
+// Find Duplicate Subtrees
+
+ string solve(TreeNode*root,unordered_map<string,pair<int,TreeNode*>>&m){
+        if(root==NULL){
+            return "$";
+        }
+        
+        if(root->left==NULL && root->right==NULL){
+            string s="";
+            s+=to_string(root->val);
+            m[s].first++;
+            m[s].second=root;
+            return s;
+        }
+        string s="";
+        s+=to_string(root->val);
+        s+="L"+solve(root->left,m);
+        s+="R"+solve(root->right,m);
+        m[s].first++;
+        m[s].second=root;
+        return s;
+    }
+    vector<TreeNode*> findDuplicateSubtrees(TreeNode* root) {
+        vector<TreeNode*>v;
+        unordered_map<string,pair<int,TreeNode*>>m;
+        solve(root,m);
+        for(auto x:m){
+            if(x.second.first>=2){
+                v.push_back(x.second.second);
+            }
+            
+        }
+        return v;
+    }
