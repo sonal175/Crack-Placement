@@ -1,0 +1,29 @@
+// Check if binary tree contain duplicate subtree of size 2 or more, or not
+
+
+ string solve(Node*root,unordered_map<string,int>&m){
+        if(root==NULL){
+            return "$";
+        }
+        
+        if(root->left==NULL && root->right==NULL){
+            string s="";
+            s+=to_string(root->data);
+            return s;
+        }
+        string s="";
+        s+=to_string(root->data);
+        s+=solve(root->left,m);
+        s+=solve(root->right,m);
+        m[s]++;
+        return s;
+    }
+    int dupSub(Node *root) {
+         // code here
+         unordered_map<string,int>m;
+         solve(root,m);
+         for(auto x :m){
+             if(x.second>=2) return 1;
+         }
+         return 0;
+    }
