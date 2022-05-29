@@ -1,0 +1,19 @@
+// Sum root to leaf numbers
+
+
+ void num(TreeNode*root,string sum,int &ans){
+        if(root==NULL) return ;
+        if(root->left==NULL && root->right==NULL){
+            sum+=to_string(root->val);
+            ans+=stoi(sum);
+            return;
+        }
+        num(root->left,sum+to_string(root->val),ans);
+        num(root->right,sum+to_string(root->val),ans);
+    }
+    int sumNumbers(TreeNode* root) {
+        int ans=0;
+        string sum="";
+        num(root,sum,ans);
+        return ans;
+    }
