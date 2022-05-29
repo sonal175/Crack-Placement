@@ -1,0 +1,35 @@
+// Sum of longest path from root to leaf
+
+pair<int,int>longest(Node*root){
+    if(root==NULL){
+        pair<int,int>a;
+        a.first=0;
+        a.second=0;
+        return a;
+    }
+    pair<int,int>l=longest(root->left);
+    pair<int,int>r=longest(root->right);
+    int sum=root->data;
+    int path=1;
+    if(l.first>r.first){
+        sum+=l.second;
+        path+=l.first;
+    }else if(l.first<r.first){
+        sum+=r.second;
+        path+=r.first;
+    }else{
+        sum+=max(l.second,r.second);
+        path+=l.first;
+    }
+    pair<int,int>ans;
+    ans.first=path;
+    ans.second=sum;
+    return ans;
+}
+    
+    int sumOfLongRootToLeafPath(Node *root)
+    {
+        //code here
+        pair<int,int>a=longest(root);
+        return a.second;
+    }
