@@ -1,0 +1,31 @@
+// Binary tree maximum path sum
+
+pair<int,int> sum(TreeNode*root){
+        if(root==NULL){
+            pair<int,int>a;
+            a.first=0;
+            a.second=INT_MIN;
+            return a;
+        }
+        if(root->left==NULL && root->right==NULL){
+            pair<int,int>a;
+            a.first=root->val;
+            a.second=root->val;
+            return a;
+        }
+        pair<int,int>l=sum(root->left);
+        pair<int,int>r=sum(root->right);
+        int fd=root->val;
+        fd=max(fd,max(fd+l.first,fd+r.first));
+        int fp=max(fd,max(l.second,r.second));
+        fp=max(fp,root->val+l.first+r.first);
+        pair<int,int>ans;
+        ans.first=fd;
+        ans.second=fp;
+        return ans;
+    }
+    int maxPathSum(TreeNode* root) {
+        pair<int,int>f=sum(root);
+        return f.second;
+    }
+};
