@@ -1,0 +1,26 @@
+// Maximum sum of non-adjacent nodes in binary tree
+
+ int val(Node* root, unordered_map<Node*,int>&m){
+        if(root==NULL) return 0;
+        if(m.find(root)!=m.end()) return m[root];
+        int inc=root->data;
+        if(root->left!=NULL){
+            inc+=val(root->left->left,m);
+            inc+=val(root->left->right,m);
+        }
+        if(root->right!=NULL){
+            inc+=val(root->right->left,m);
+            inc+=val(root->right->right,m);
+        }
+        int exc=0;
+        exc+=val(root->left,m);
+        exc+=val(root->right,m);
+        m[root]=max(inc,exc);
+        return m[root];
+    }
+    int getMaxSum(Node *root) 
+    {
+        // Add your code here
+        unordered_map<Node*,int>m;
+        return val(root,m);
+    }
