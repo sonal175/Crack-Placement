@@ -1,0 +1,55 @@
+// Check if given grah represents a valid tree
+
+
+bool cycle(vector<bool>visited,vector<int>*v,int n){
+         queue<int>q;
+         q.push(0);
+         while(q.size()>0){
+             int k=q.front();
+             q.pop();
+             if(visited[k]==true){
+                 return true;
+             }else{
+             visited[k]=true;
+             }
+
+             for(int i=0;i<v[k].size();i++){
+                 if(visited[v[k][i]]==false){
+                     q.push(v[k][i]);
+                 }
+             }
+         }
+         return false;
+     }
+     
+    bool validTree(int n, vector<vector<int>> &edges) {
+        // write your code here
+        vector<int>v[n];
+        for(int i=0;i<edges.size();i++){
+            v[edges[i][0]].push_back(edges[i][1]);
+            v[edges[i][1]].push_back(edges[i][0]);
+        }
+        vector<bool>visited(n,false);
+        bool val=cycle(visited,v,n);
+        if(val==true){
+            return false;
+        }
+        queue<int>q;
+        q.push(0);
+        while(q.size()>0){
+            int k=q.front();
+            q.pop();
+            visited[k]=true;
+            for(int i=0;i<v[k].size();i++){
+                if(visited[v[k][i]]==false){
+                    q.push(v[k][i]);
+                }
+            }
+        }
+        for(int i=0;i<visited.size();i++){
+            if(visited[i]==false){
+                return false;
+            }
+        }
+        return true;
+}
