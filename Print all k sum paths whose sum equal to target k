@@ -1,0 +1,27 @@
+// Print all K sum paths
+
+
+ void sum (TreeNode*root,int t,vector<vector<int>>&p,vector<int>&path){
+        if(root==NULL) return;
+        path.push_back(root->val);
+        sum(root->left,t,p,path);
+        sum(root->right,t,p,path);
+        int f=0;
+        for(int i=path.size()-1;i>=0;i--){
+            f+=path[i];
+            if(f==t){
+                vector<int>k;
+                for(int j=i;j<path.size();j++){
+                    k.push_back(path[j]);
+                }
+                p.push_back(k);
+            }
+        }
+        path.pop_back();
+    }
+    vector<vecto<int>> pathSum(TreeNode* root, int targetSum) {
+        vector<int>path;
+        vector<vector<int>>p;
+        sum(root,targetSum,p,path);
+        return p;
+    }
