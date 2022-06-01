@@ -1,0 +1,17 @@
+// Return no. of paths havoing sum equal to targetsum
+
+ int sum(TreeNode*root, unordered_map<long int,int>&m,long int rs,int t){
+        if(root==NULL) return 0;
+        rs+=root->val;
+        int cnt=m[rs-t];
+        m[rs]++;
+        cnt+=sum(root->left,m,rs,t);
+        cnt+=sum(root->right,m,rs,t);
+        m[rs]--;
+        return cnt;
+    }
+    int pathSum (TreeNode* root, int targetSum) {
+        unordered_map<long int,int>m;
+        m[0]=1;
+        return sum(root,m,0,targetSum);
+    }
