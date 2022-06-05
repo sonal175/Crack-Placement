@@ -1,0 +1,36 @@
+// Predecessor and successor of BST
+
+
+Node * sucessor(Node* root, int key){
+    Node * s=NULL;
+    while(root!=NULL){
+        if(key>=root->key){
+            root=root->right;
+        }else{
+            s=root;
+            root=root->left;
+        }
+    }
+    return s;
+}
+Node * predecesor(Node* root, int key){
+    Node * p=NULL;
+    while(root!=NULL){
+        if(key<=root->key){
+            root=root->left;
+        }else{
+            p=root;
+            root=root->right;
+        }
+    }
+    return p;
+}
+void findPreSuc(Node* root, Node*& pre, Node*& suc, int key)
+{
+
+// Your code goes here
+pre=predecesor(root,key);
+suc=sucessor(root,key);
+
+
+}
