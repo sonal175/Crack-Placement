@@ -1,0 +1,16 @@
+// Maximum element in a BST
+
+
+Node* maxi(Node* root){
+    if(root->right==NULL){
+        return root;
+    }
+    return mini(root->right);
+}
+int minValue(Node* root) {
+    // Code here
+    if(root==NULL) return -1;
+    if(root->right==NULL ) return root->data;
+    Node* a=maxi(root);
+    return a->data;
+}
