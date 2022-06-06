@@ -1,0 +1,56 @@
+// check for bst
+
+pair<int,pair<int,bool>> bst(Node *root){
+        if(root==NULL){
+            pair<int,pair<int,bool>>a;
+            a.first=INT_MAX;
+            a.second.first=INT_MIN;
+            a.second.second=true;
+            return a;
+        }
+        if(root->left==NULL && root->right==NULL){
+            pair<int,pair<int,bool>>a;
+            a.first=root->data;
+            a.second.first=root->data;
+            a.second.second=true;
+            return a;
+        }
+        pair<int,pair<int,bool>> l=bst(root->left);
+        pair<int,pair<int,bool>> r=bst(root->right);
+        bool v;
+        if(l.second.second && r.second.second && root->data>l.second.first && root->data<r.first){
+             v=true;            
+        }else{
+            v=false;
+        }
+        int v1=max(root->data,max(l.second.first,r.second.first));
+        int v2=min(root->data,min(l.first,r.first));
+        pair<int,pair<int,bool>>k;
+        k.first=v2;
+        k.second.first=v1;
+        k.second.second=v;
+        return k;
+    }
+    
+    bool isBST(Node* root) 
+    {
+        // Your code here
+        pair<int,pair<int,bool>>a=bst(root);
+        return a.second.second;
+    }
+    
+    // Using rangg method
+    
+    bool bst (Node *root,int mini,int maxi){
+        if(root==NULL) return true;
+        if(root->data<mini || maxi<root->data) return false;
+         bool l=bst(root->left,mini,root->data-1);
+         bool r=bst(root->right,root->data+1,maxi);
+         return l && r;
+        
+    }
+    bool isBST(Node* root) 
+    {
+        // Your code here
+        return bst(root,INT_MIN,INT_MAX);
+    }
