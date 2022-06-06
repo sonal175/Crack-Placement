@@ -1,0 +1,39 @@
+// Populating next right pointer in each node(Leetcode -117)
+
+
+ Node* connect(Node* root) {
+        if(root==NULL) return root;
+        queue<Node *> q;
+        q.push(root);
+        while(q.size()>0){
+            int s=q.size();
+            if(s>1){
+                while(s>0){
+                    Node* p=q.front();
+                    q.pop();
+                    if(p->left!=NULL){
+                        q.push(p->left);
+                    }
+                    if(p->right!=NULL){
+                        q.push(p->right);
+                    }
+                    if(s>1){
+                    p->next=q.front();
+                    }
+                    s--;
+                }
+                
+            }else{
+                Node* p=q.front();
+                    q.pop();
+                    if(p->left!=NULL){
+                        q.push(p->left);
+                    }
+                    if(p->right!=NULL){
+                        q.push(p->right);
+                    }
+            }
+            
+        }
+        return root;
+    }
