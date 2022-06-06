@@ -1,0 +1,16 @@
+// Populaating next right pointer in each node (Leetcode-116)
+
+Node* connect(Node* root) {
+        Node *black =root;
+        while(black!=NULL && black->left!=NULL){
+            Node * n=black;
+            while(true){
+                n->left->next=n->right;
+                if(n->next==NULL) break;
+                n->right->next=n->next->left;
+                n=n->next;
+            }
+            black=black->left;
+        }
+        return root;
+    }
