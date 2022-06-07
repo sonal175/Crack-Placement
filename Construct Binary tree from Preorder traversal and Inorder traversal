@@ -1,5 +1,5 @@
 // Construct Binary tree from preorder and inorder traversal
-
+--- o(n^2)
 TreeNode* build(vector<int>&preorder,int ps,int pe,vector<int>&inorder,int is,int ie){
         if(is>ie || ps>pe){
             return NULL;
@@ -30,4 +30,29 @@ TreeNode* build(vector<int>&preorder,int ps,int pe,vector<int>&inorder,int is,in
         return build(preorder,0,preorder.size()-1,inorder,0,inorder.size()-1);
         
         
+    }
+    
+    // Optimised approach (o(n))
+    
+    TreeNode * build(vector<int>&preorder, vector<int>& inorder, int ps,int pe,int is,int ie,unordered_map<int,int>&m){
+        if(is>ie || ps>pe) return NULL;
+        TreeNode * root=new TreeNode(preorder[ps]);
+        int lins=is;
+        int line=m[root->val]-1;
+        int lps= ps+1;
+        int lpe=line-lins+lps;
+        root->left=build(preorder,inorder,lps,lpe,lins,line,m);
+        int rins=line+2;
+        int rine=ie;
+        int rps=lpe+1;
+        int rpe=pe;
+        root->right=build(preorder,inorder,rps,rpe,rins,rine,m);
+        return root;
+    }
+    TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) {
+        unordered_map<int,int>m;
+        for(int i=-0;i<inorder.size();i++){
+            m[inorder[i]]=i;
+        }
+        return build(preorder,inorder,0,preorder.size()-1,0,inorder.size()-1,m);
     }
