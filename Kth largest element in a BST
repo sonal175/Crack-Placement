@@ -1,0 +1,47 @@
+ // Kth largest element in a BST  
+ 
+ // If we didn't use morris traversal then solution has time complexity -o(n) and space complexity- o(h)- where h is height of tree, n is number of nodes in a tree
+   
+   
+  // if use reverse inorder morris traversal then time complexity -o(n) and space complexity - o(1)
+    Code--
+     
+      int kthLargest(Node *root, int K)
+    {
+        //Your code here
+        int x=0;
+        int cnt=1;
+        Node* curr= root;
+        while(curr!=NULL){
+            if(curr->right==NULL){
+                if(cnt==K){
+                    x=curr->data;
+                    return x;
+                }else{
+                    cnt++;
+                    curr=curr->left;
+                }
+            }else{
+                Node*prev=curr->right;
+                while(prev->left && prev->left!=curr){
+                    prev=prev->left;
+                }
+                if(prev->left==NULL){
+                    prev->left=curr;
+                    curr=curr->right;
+                    
+                }else{
+                    prev->left==NULL;
+                    if(cnt==K){
+                        x=curr->data;
+                        return x;
+                    }else{
+                        cnt++;
+                        curr=curr->left;
+                    }
+                }
+            }
+        }
+        
+        
+        
