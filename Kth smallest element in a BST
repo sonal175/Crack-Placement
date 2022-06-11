@@ -1,0 +1,57 @@
+// Kth smallest element in a BST
+
+// if done without morris traversal then time complexity-o(n), space complexity -o(h) , h is height of tree and n is number of nodes
+
+int cnt =0;
+     void small(TreeNode* root,int k,int &x){
+        if(root==NULL) return ;
+         small(root->left,k,x);
+         cnt++;
+         if(cnt==k) x=root->val;
+         small(root->right,k,x);
+    }
+    int kthSmallest(TreeNode* root, int k) {
+        int x=0;
+         small(root,k,x);
+        return x;
+    }
+    
+    // if done using morris traversa then t8me comlexity -o(n) and space complexity-o(1)
+    
+     int KthSmallestElement(Node *root, int K) {
+        // add code here.
+        Node*curr=root;
+        int cnt=1;
+        int x=-1;
+        while(curr!=NULL){
+            if(curr->left==NULL){
+                if(cnt==K){
+                   x=curr->data;
+                    return x;
+                }else{
+                    cnt++;
+                    curr=curr->right;;
+                }
+            }else{
+                 Node* prev=curr->left;
+                while(prev->right && prev->right!=curr){
+                    prev=prev->right;
+                }
+                if(prev->right==NULL){
+                    prev->right=curr;
+                    curr=curr->left;
+                }else{
+                    prev->right=NULL;
+                    if(cnt==K){
+                        x=curr->data;
+                        return x;
+                    }else{
+                        cnt++;
+                        curr=curr->right;
+                    }
+                }
+                
+            }
+        }
+        return x;
+    }
