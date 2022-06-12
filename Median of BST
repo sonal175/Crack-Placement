@@ -1,0 +1,92 @@
+// Median of BST
+ using morris traversal we can find bst in o(n) time complexity and o(1) space complexity
+ 
+ Code--
+ 
+ 
+int count(Node* root){
+    int cnt=0;
+    Node* curr=root;
+    while(curr!=NULL){
+        if(curr->left==NULL){
+            cnt++;
+            curr=curr->right;
+        }else{
+            Node*prev=curr->left;
+            while(prev->right && prev->right!=curr){
+                prev=prev->right;
+            }
+            if(prev->right==NULL){
+                prev->right=curr;
+                curr=curr->left;
+            }else{
+                prev->right=NULL;
+                cnt++;
+                curr=curr->right;
+            }
+        }
+    }
+    return cnt;
+}
+pair<int,int> bst(Node* root){
+    int val=count(root);
+    int f,s;
+    if(val%2==0){
+        int k=(int)(val/2);
+        f=k;
+        s=k+1;
+        
+    }else{
+        int k=(int)(val/2);
+        f=k+1;
+        s=0;
+    }
+    int cnt=0;
+    Node* curr=root;
+    int v1=0, v2=0;
+    while(curr!=NULL){
+        if(curr->left==NULL){
+            cnt++;
+            if(cnt==f){
+                v1=curr->data;
+            }else if(cnt==s){
+                v2=curr->data;
+            }
+            curr=curr->right;
+        }else{
+            Node*prev=curr->left;
+            while(prev->right && prev->right!=curr){
+                prev=prev->right;
+            }
+            if(prev->right==NULL){
+                prev->right=curr;
+                curr=curr->left;
+            }else{
+                prev->right=NULL;
+                cnt++;
+                 if(cnt==f){
+                v1=curr->data;
+            }else if(cnt==s){
+                v2=curr->data;
+            }
+                curr=curr->right;
+            }
+        }
+    }
+    pair<int,int>ans;
+    ans.first=v1;
+    ans.second=v2;
+    return ans;
+    
+}
+float findMedian(struct Node *root)
+{
+      //Code here
+      pair<int,int>v=bst(root);
+      if(v.second==0){
+          return (float)(v.first);
+      }
+      float val=(float)((float)(v.first+v.second)/(float)2);
+      
+}
+
