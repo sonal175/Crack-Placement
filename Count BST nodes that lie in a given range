@@ -1,0 +1,19 @@
+// Count BST nodes that lie in a given range
+
+
+int getCount(Node *root, int l, int h)
+    {
+      // your code goes here  
+      
+      if(root==NULL) return 0;
+      if(root->data>=l && root->data<=h){
+          int cnt=1;
+          cnt+=getCount(root->left,l,root->data);
+          cnt+=getCount(root->right,root->data,h);
+          return cnt;
+          
+      }else if(l>root->data && h>root->data){
+          return getCount(root->right,l,h);
+      }
+      return getCount(root->left,l,h);
+    }
