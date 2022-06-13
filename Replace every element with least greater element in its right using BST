@@ -1,0 +1,32 @@
+// Replace every element with the least greater element on its right using BST
+
+// average time complexity-o(nlogn) and worst -o(n^2) as tree can become skewed
+// space complexity -o(h) , height of tree
+
+Code-- 
+ Node * insert(Node* root, int data,Node* succ){
+     if(root==NULL){
+     Node* temp=new Node(data);
+     return temp;
+     }
+     if(data<root->data){
+       succ=root;
+       root->left=insert(root->left,data,succ);
+       }else if(data>root->data){
+         root->right=insert(root->right,data,succ);
+       }
+       return root;
+     }
+     
+     void replace(int arr[],int n){
+        Node*root=NULL;
+        for(int i=n-1;i>=0;i--){
+          Node* succ=NULL;
+          root=insert(root,arr[i],succ);
+          if(succ){
+            arr[i]=succ->data;
+            }else{
+             arr[i]=-1;
+           }
+         }
+     
