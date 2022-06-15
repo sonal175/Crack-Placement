@@ -1,0 +1,34 @@
+// preorder bst to postorder bst
+
+
+// Code--
+void post(int pre[],int s,int e,vector<int>&post,int &i){
+   if(s>e) return ;
+   int k=pre[s];
+   post[i]=k;
+   i--;
+   int index=INT_MAX;
+   for(int j=s;j<=e;j++){
+       if(pre[j]>k){
+           index=j;
+       }
+   }
+   
+   post(pre,index,e,post,i);
+   post(pre,s+1,index-1,post,i);
+   return;
+    
+    
+}
+vector<int> post_order(int pre[], int size)
+{
+    //code here
+    int i=size-1;
+    vector<int>post;
+    int s=0;
+    int e=size-1;
+    post(pre,s,e,post,i);
+    return post;
+    
+    
+}
