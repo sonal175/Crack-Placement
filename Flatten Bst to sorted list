@@ -1,0 +1,67 @@
+// Flatten Bst to sorted list
+
+// Iterative Approach (Avg complexity: T-o(n), S-o(h)
+// Code--
+
+TreeNode<int>* flatten(TreeNode<int>* root)
+{
+    // Write your code here
+    if(root==NULL) return NULL;
+    stack<TreeNode<int>*>s;
+    TreeNode<int>*curr=NULL;
+    TreeNode<int>*prev=NULL;
+    
+    while(1){
+        while(root!=NULL){
+            s.push(root);
+            root=root->left;
+        }
+        if(s.empty()) break;
+        if(curr==NULL && prev==NULL){
+            prev=s.top();
+            curr=s.top();
+            root=s.top()->right;
+            s.pop();
+        }else{
+            prev->right=s.top();
+            prev->left=NULL;
+            prev=s.top();
+            root=s.top()->right;
+            s.pop();
+        }
+              
+    }
+    prev->left=NULL;
+    return curr;
+}
+ 
+ 
+ 
+ 
+ // Recursive Approach (Avg Complexity-- T-o(n), S-o(h)
+ 
+ // Code--
+ 
+ 
+void inorder(TreeNode<int>* root, TreeNode<int>*&prev){
+    if(root==NULL) return;
+    inorder(root->left,prev);
+    prev->left=NULL;
+    prev->right=root;
+    prev=root;
+    inorder(root->right,prev);
+}
+TreeNode<int>* flatten(TreeNode<int>* root)
+{
+    // Write your code here
+    TreeNode<int>*dummy=new TreeNode<int>(-1);
+    TreeNode<int>*prev=dummy;
+    inorder(root,prev);
+    prev->left=NULL;
+    prev->right=NULL;
+    TreeNode<int>*ret=dummy->right;
+    delete dummy;
+    return ret;
+}
+
+
