@@ -1,0 +1,58 @@
+// Largest Bst in Binary tree
+
+// Code--
+
+class sol{
+    public:
+    int h;
+    int mini;
+    int maxi;
+    int no;
+    bool b;
+};
+
+class Solution{
+    public:
+    /*You are required to complete this method */
+    // Return the size of the largest sub-tree which is also a BST
+    sol bst(Node* root){
+        if(root==NULL){
+            sol v;
+            v.h=0;
+            v.mini=INT_MAX;
+            v.maxi=INT_MIN;
+            v.no=0;
+            v.b=true;
+            
+            return v;
+        }
+        if(root->left==NULL && root->right==NULL){
+            sol v;
+            v.h=1;
+            v.mini=root->data;
+            v.maxi=root->data;
+            v.no=1;
+            v.b=true;
+            return v;
+        }
+        sol v1=bst(root->left);
+        sol v2=bst(root->right);
+        sol v3;
+        v3.h=max(v2.h,v1.h);
+        v3.no=1+v1.no+v2.no;
+        v3.b=false;
+        
+        if(v1.maxi<root->data && root->data<v2.mini && v1.b==true && v2.b==true){
+            v3.b=true;
+            v3.h=max(v3.h,v3.no);
+        }
+        v3.mini=min(v2.mini,min(root->data,v1.mini));
+        v3.maxi=max(v2.maxi,max(root->data,v1.maxi));
+        return v3;
+    }
+    int largestBst(Node *root)
+    {
+    	//Your code here
+    	sol ans=bst(root);
+    	return ans.h;
+    }
