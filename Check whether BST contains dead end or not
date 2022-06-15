@@ -1,0 +1,26 @@
+// Check whether BST contains dead end or not
+  
+  
+  // Code--
+bool find(Node * root, int min,int max){
+    if(root==NULL){
+        return false;
+    }
+    if(root->left==NULL && root->right==NULL){
+        if(root->data==max && root->data== min && min==max){
+            return true;
+        }
+    }
+    
+   bool v1= find( root->left,min,root->data-1) ;
+   bool v2=find(root->right,root->data+1,max);
+   return v1 || v2;
+    
+}
+bool isDeadEnd(Node *root)
+{
+    //Your code here
+    
+    return find(root,1,INT_MAX);
+    
+}
