@@ -1,0 +1,27 @@
+// Binary tree paths
+
+// code--
+
+ void binary(TreeNode* root,string s, vector<string>& st){
+        if(root==NULL){
+            return;
+        }
+        if(root->left==NULL && root->right==NULL){
+            s+= to_string(root->val);
+            st.push_back(s);
+            s.pop_back();
+        }
+        s+=to_string(root->val);
+        s+="->";
+        binary(root->left,s,st);
+        binary(root->right,s,st);
+        s.pop_back();
+        s.pop_back();
+        
+    }
+    vector<string> binaryTreePaths(TreeNode* root) {
+        vector<string>st;
+        string s="";
+        binary(root,s,st);
+        return st;
+    }
