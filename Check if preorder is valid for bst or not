@@ -1,0 +1,29 @@
+// check if preorder is valid for bst or not
+
+// code--
+ // TC-O(n)  ,  SC-O(n)
+ bool func(int arr[],int &idx, int key, int mn, int mx,int n){
+      if(idx>=n){
+          return true;
+      }
+    
+      
+      if(mn<=key && key<=mx){
+          idx++;
+          if(func(arr,idx,arr[idx],mn,key-1,n)){
+              return true;
+          }
+          if(func(arr,idx,arr[idx],key+1,mx,n)){
+              return true;
+          }
+      }
+      return false;
+  }
+    int canRepresentBST(int arr[], int N) {
+        // code here
+        int idx=0;
+        int mn=INT_MIN;
+         int mx=INT_MAX;
+        if(func(arr,idx,arr[0],mn,mx,N))return 1;
+        else return 0;
+    }
