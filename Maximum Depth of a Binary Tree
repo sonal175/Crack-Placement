@@ -1,0 +1,11 @@
+// Maximum Depth of a Binary Tree
+
+// Code--
+
+int maxDepth(TreeNode* root) {
+        if(root==NULL) return 0;
+        int l=maxDepth(root->left);
+        int r=maxDepth(root->right);
+        int v=max(l,r);
+        return 1+v;
+    }
