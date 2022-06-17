@@ -1,0 +1,21 @@
+// Range Sum of BST
+
+
+// Code--
+
+void range(TreeNode*root,int low,int high, int& sum){
+        if(root==NULL){
+            return;
+        }
+        if(root->val>=low && root->val<=high){
+            sum+=root->val;
+        }
+        range(root->left,low,high,sum);
+        range(root->right,low,high,sum);
+    }
+    
+    int rangeSumBST(TreeNode* root, int low, int high) {
+        int sum=0;
+        range(root,low,high,sum);
+        return sum;
+    }
