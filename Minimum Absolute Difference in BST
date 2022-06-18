@@ -1,0 +1,46 @@
+// Minimum Absolute difference in Bst
+
+
+// Code--
+
+class solve{
+        public:
+      int diff;
+      int mini;
+      int maxi;
+        
+    };
+    solve d(TreeNode* root){
+        if(root==NULL){
+            solve p;
+            p.diff=INT_MAX;
+            p.mini=100001;
+            p.maxi=-100000;
+            return p;
+                
+                
+        }
+        if(root->left==NULL && root->right==NULL){
+             solve p;
+            p.diff=INT_MAX;
+            p.mini=root->val;
+            p.maxi=root->val;
+            return p;
+                
+        }
+        solve l=d(root->left);
+        solve r=d(root->right);
+        int v= min(abs(root->val-l.maxi),min(abs(root->val-r.mini),abs(l.maxi-r.mini)));
+            v=min(v,min(l.diff,r.diff));
+        int f1=min(l.mini,min(r.mini,root->val));
+        int f2=max(r.maxi,max(l.maxi,root->val));
+            solve p;
+            p.diff=v;
+            p.mini=f1;
+            p.maxi=f2;
+                return p;
+    }
+    int getMinimumDifference(TreeNode* root) {
+        solve k=d(root);
+        return k.diff;
+    }
