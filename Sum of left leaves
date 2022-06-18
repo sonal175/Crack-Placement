@@ -1,0 +1,19 @@
+// Dum of left leaves
+
+
+// Code--
+
+int s=0;
+    void sum(TreeNode*root, TreeNode*prev ){
+        if(root== NULL) return;
+        if(root->left==NULL && root->right==NULL && prev->left==root){
+            s+=root->val;
+        }
+        sum(root->left,root);
+        sum(root->right,root);
+    }
+    int sumOfLeftLeaves(TreeNode* root) {
+        TreeNode*prev=new TreeNode();
+        sum(root,prev);
+        return s;
+    }
