@@ -1,0 +1,68 @@
+// Binary Search Tree Iterator
+
+
+// Code--- 
+
+class BSTIterator {
+    TreeNode* p=new TreeNode();
+public:
+    BSTIterator(TreeNode* root) {
+        TreeNode * k=new TreeNode();
+        stack<TreeNode*>s;
+    TreeNode*curr=NULL;
+    TreeNode*prev=NULL;
+
+    while(1){
+        while(root!=NULL){
+            s.push(root);
+            root=root->left;
+        }
+        if(s.empty()) break;
+        if(curr==NULL && prev==NULL){
+            prev=s.top();
+            curr=s.top();
+            root=s.top()->right;
+            s.pop();
+        }else{
+            prev->right=s.top();
+            prev->left=NULL;
+            prev=s.top();
+            root=s.top()->right;
+            s.pop();
+        }
+
+    }
+    prev->left=NULL;
+    k->right=curr;
+    root=k;
+    p=root;
+    
+    }
+     
+    int next( TreeNode*& p) {
+       p=p->right;
+        int k=p->val;
+        return k;
+        
+    }
+    
+    
+    int next() {
+       return next(p);
+        
+    }
+    
+     
+    bool hasNext(TreeNode*&p) {
+        if(p->right!=NULL){
+            return true;
+        }else{
+            return false;
+        }
+    }
+    
+    bool hasNext() {
+        return hasNext(p);
+    }
+    
+    };
