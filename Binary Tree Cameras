@@ -1,0 +1,25 @@
+// Binary Tree Cameras
+
+
+
+// Code--
+
+int cameras=0;
+    int cam(TreeNode*root){
+        if(root==NULL) return 1;
+        int l=cam(root->left);
+        int r=cam(root->right);
+        
+        if(l==-1 || r==-1){
+            cameras++;
+            return 0;
+        }
+        if(l==0 || r==0) return 1;
+        return -1;
+    }
+    int minCameraCover(TreeNode* root) {
+        
+        if(cam(root)==-1) cameras++;
+        return cameras;
+
+    }
