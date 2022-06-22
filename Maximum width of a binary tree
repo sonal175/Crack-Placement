@@ -1,0 +1,35 @@
+// Maximum width of a binary tree
+
+
+// Code--
+
+
+ int widthOfBinaryTree(TreeNode* root) {
+        queue<pair<long long int,TreeNode*>>q;
+        int maxi=0;
+        q.push({0,root});
+        while(q.size()>0){
+            int s=q.size();
+            pair<long long int,TreeNode*>k=q.front();
+            long long int l=k.first;
+            long long int r;
+            while(s-->0){
+                pair<long long int,TreeNode*>p=q.front();
+                q.pop();
+                 r=p.first;
+                TreeNode*m=p.second;
+                long long int j=r-l;
+                if(m->left!=NULL){
+                    q.push({(2*j+1),m->left});
+                }
+                if(m->right!=NULL){
+                    q.push({(2*j+2),m->right});
+                }
+                
+            }
+            int val=(r-l)+1;
+            maxi=max(val,maxi);
+            
+        }
+        return maxi;
+    }
