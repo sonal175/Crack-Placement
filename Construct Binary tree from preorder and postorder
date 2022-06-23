@@ -1,0 +1,40 @@
+// Construct binary tree from preorder and postorder traversal
+
+// Code--
+Here unique tree can oly be created when tree is full binary tree otherwise the
+tree that is created have different arrangement from original one that's why 
+in question written arrangements but we can create any tree but unique tree can only be 
+created if it is full binary tree but here in this question we are creating any tree
+
+// TC-O(n)  SC-O(n)
+ TreeNode* construct(vector<int>&pre,vector<int>&post,int prs,int pree,int pos,int poe,unordered_map<int,int>&m){
+        if(prs>pree || pos>poe) return NULL;
+        
+        TreeNode*root=new TreeNode(pre[prs]);
+        if(prs==pree  || pos==poe) return root;
+        int k=pre[prs+1];
+        int lprs=prs+1;
+        int lpre;
+        int lpos=pos;
+        int lpoe=m[k];
+        lpre=(lpoe-lpos)+lprs;
+        int rprs=lpre+1;
+        int rpre=pree;
+        int rpos=lpoe+1;
+        int rpoe=poe-1;
+        
+        root->left=construct(pre,post,lprs,lpre,lpos,lpoe,m);
+        
+        root->right=construct(pre,post,rprs,rpre,rpos,rpoe,m);
+
+        return root;
+        
+        
+    }
+    TreeNode* constructFromPrePost(vector<int>& preorder, vector<int>& postorder) {
+        unordered_map<int,int>m;
+        for(int i=0;i<postorder.size();i++){
+            m[postorder[i]]=i;
+        }
+        return construct(preorder,postorder,0,preorder.size()-1,0,postorder.size()-1,m);
+    }
