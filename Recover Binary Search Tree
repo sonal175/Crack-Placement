@@ -1,0 +1,73 @@
+// Recover Binary Search Tree
+
+// Using morris traversal -SC-o(1)
+
+// Code--
+
+ void bst(TreeNode*root,TreeNode*&a,TreeNode*&b){
+        TreeNode*prev=NULL;
+        TreeNode*curr=root;
+        while(curr!=NULL){
+            if(curr->left==NULL){
+                if(prev!=NULL && prev->val>curr->val){
+                    if(a==NULL) a=prev;
+                    b=curr;
+                }
+                prev=curr;
+                curr=curr->right;
+            }else{
+                TreeNode*k=curr->left;
+                while(k->right && k->right!=curr){
+                    k=k->right;
+                }
+                if(k->right==NULL){
+                    k->right=curr;
+                    curr=curr->left;
+                }else{
+                    k->right=NULL;
+                if(prev!=NULL && prev->val>curr->val){
+                    if(a==NULL) a=prev;
+                    b=curr;
+                }
+                prev=curr;
+                curr=curr->right;
+                }
+            }
+        }
+        return;
+    }
+    void recoverTree(TreeNode* root) {
+        TreeNode*a=NULL;;
+        TreeNode*b=NULL;
+        bst(root,a,b);
+        int temp=a->val;
+        a->val=b->val;
+        b->val=temp;
+        return;
+        
+    }
+    
+    // Using Rrecursion --SC--o(n) - where n is no. of nodes
+    
+    // Code--
+    
+    void inorder(TreeNode*root,TreeNode*&a,TreeNode*&b,TreeNode*&prev){
+        if(root==NULL) return;
+        inorder(root->left,a,b,prev);
+        if(prev!=NULL && prev->val>root->val){
+            if(a==NULL) a=prev;
+            b=root;
+        }
+        prev=root;
+        inorder(root->right,a,b,prev);
+    }
+    void recoverTree(TreeNode* root) {
+        if(root==NULL) return;
+        TreeNode*a=NULL;
+        TreeNode*b=NULL;
+        TreeNode*prev=NULL;
+        inorder(root,a,b,prev);
+        int temp=a->val;
+        a->val=b->val;
+        b->val=temp;
+    }
