@@ -1,0 +1,14 @@
+// Validate Binary Search Tree
+
+/ Code--
+
+bool bst(TreeNode* root,  long long mini,long long maxi){
+        if(root==NULL) return true;
+        if(root->val<mini || root->val>maxi) return false;
+        bool l=bst(root->left,mini,(long long) root->val-1);
+        bool r=bst(root->right,(long long)root->val+1,maxi);
+        return l && r;
+    }
+    bool isValidBST(TreeNode* root) {
+         return bst(root,INT_MIN, INT_MAX);
+    }
