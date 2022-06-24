@@ -1,0 +1,52 @@
+// All nodes distance K in Binary Tree
+
+
+// Code--
+
+ vector<int> distanceK(TreeNode* root, TreeNode* target, int k) {
+        
+        unordered_map<TreeNode*,TreeNode*>m;
+        unordered_set<int>s;
+        queue<TreeNode*>q;
+        q.push(root);
+        m[root]=NULL;
+        while(q.size()>0){
+            TreeNode*p=q.front();
+            q.pop();
+            if(p->left!=NULL){
+                q.push(p->left);
+                m[p->left]=p;
+                
+            }
+            if(p->right!=NULL){
+                q.push(p->right);
+                m[p->right]=p;
+            }
+        }
+        vector<int>v;
+        queue<pair<TreeNode*,int>>q1;
+        q1.push({target,0});
+        while(q1.size()>0){
+            int s1=q1.size();
+            while(s1-->0){
+                pair<TreeNode*,int>p=q1.front();
+                q1.pop();
+                TreeNode*k1=p.first;
+                s.insert(k1->val);
+                int k2=p.second;
+                if(k2==k){
+                    v.push_back(k1->val);
+                }
+                if(k1->left!=NULL && s.find(k1->left->val)==s.end() && k2+1<=k){
+                    q1.push({k1->left,k2+1});
+                }
+                 if(k1->right!=NULL && s.find(k1->right->val)==s.end()&& k2+1<=k){
+                    q1.push({k1->right,k2+1});
+                }
+                if(m[k1]!=NULL && s.find(m[k1]->val)==s.end() && k2+1<=k){
+                    q1.push({m[k1],k2+1});
+                }
+            }
+        }
+        return v;
+    }
