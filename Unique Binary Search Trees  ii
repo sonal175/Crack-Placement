@@ -1,0 +1,44 @@
+// Unique Binary Search Trees ii
+
+
+// Time complexity is a tricky one here: To understand it, consider a scenario. 
+Lets say I have got 5 element for the tree. 
+Lets consider one case where we use first 2 elements for left subtree, and last two element for right subtree with middle element 3 as root. 
+Let C2 be the number of possible subtree with 2 elements. Now, if you see the two for loop above in code, for every element in left subtree, we attach it with all the element of right subtree. Or, basically if outer loop runs for C2 times, and inner loop also runs for C2 times, then what is the complexity? 
+
+It is : C2*C2. right.
+
+Now, for 5 elements, I can choose left subtree with (0,1,2,3,4) elements and same for right subtree (4,3,2,1,0) elements. Thus from above analysis, we get:
+C0*C4 + C1*C3 + C2*C2 + C3*C1 + C4*C0 cases. This is nothing but what we call Catalan number. Read about it on Geeksforgeeks or wikipedia.
+
+Thus to construct all possible trees with a given root, we have Gn (catalan number) as out time complexity. And here we do that for n=1 to n number of roots. Thus complexity = nGn which is same as O(Gn).
+
+
+
+// Code--
+
+vector<TreeNode*>generate(int low,int high){
+         vector<TreeNode*>temp;
+        if(low>high){
+            temp.push_back(NULL);
+            return temp;
+        }
+        for(int i=low;i<=high;i++){
+            vector<TreeNode*>leftt=generate(low,i-1);
+            vector<TreeNode*>rightt=generate(i+1,high);
+            for(int k=0;k<rightt.size();k++){
+                for(int m=0;m<leftt.size();m++){
+                    TreeNode*current=new TreeNode(i);
+                    current->left=leftt[m];
+                    current->right=rightt[k];
+                    temp.push_back(current);
+                }
+            }
+            
+        }
+        return temp;
+    }
+    vector<TreeNode*> generateTrees(int n) {
+       vector<TreeNode*>ans=generate(1,n);
+        return ans;
+    }
