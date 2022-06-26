@@ -1,0 +1,47 @@
+// Sum of distances in Tree
+
+// TC-O(n)  SC-O(n)  , where n is the number of nodes
+
+// Code--
+
+  
+    void preprocessing(int src,int par,vector<int>*v,int*subtreesize,int*subtreeans){
+        int numnodes=1;
+        int anssub=0;
+        for(int i=0;i<v[src].size();i++){
+            if(v[src][i]!=par){
+                preprocessing(v[src][i],src,v,subtreesize,subtreeans);
+                numnodes+=subtreesize[v[src][i]];
+                anssub+=subtreesize[v[src][i]]+subtreeans[v[src][i]];
+            }
+        }
+        subtreesize[src]=numnodes;
+        subtreeans[src]=anssub;
+    }
+    void solve(int src,int par,int par_ans,int nodes,int *subtreesize,int*subtreeans,vector<int>*v,vector<int>&ans){
+        ans[src]=subtreeans[src]+(par_ans+(nodes-subtreesize[src]));
+        for(int i=0;i<v[src].size();i++){
+            int child=v[src][i];
+            if(child!=par){
+                solve(child,src,ans[src]-(subtreeans[child]+subtreesize[child]),nodes,subtreesize,subtreeans,v,ans);
+            }
+        }
+    }
+    vector<int> sumOfDistancesInTree(int n, vector<vector<int>>& edges) {
+        if(n==1){
+             vector<int>v(n);
+            return v;
+        }
+        int subtreesize[n];
+        int subtreeans[n];
+        vector<int>v[n];
+        vector<int>ans(n,0);
+        for(int i=0;i<edges.size();i++){
+            v[edges[i][0]].push_back(edges[i][1]);
+            v[edges[i][1]].push_back(edges[i][0]);
+        }
+        preprocessing(0,-1,v,subtreesize,subtreeans); // We can choose any node as root node whose parent is considered to be -1(which means no parent), here i 
+                                                             choose 0 but we can choose any node from 0 to n-1 like 1, 2 ,etc..
+        solve(0,-1,0,n,subtreesize,subtreeans,v,ans);
+        return ans;
+    }
