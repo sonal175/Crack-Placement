@@ -1,0 +1,51 @@
+// Level order traversal in spiral form
+
+// TC-O(number of nodes) SC-O(number of nodes in a tree)
+
+// Code--
+
+ vector<int> findSpiral(Node *root)
+
+{
+    
+    if(root==NULL){
+        vector<int>v;
+        return v;
+    }
+    vector<int>v;
+    deque<Node*>dq;
+    dq.push_front(root);
+    int i=1;
+    while(dq.size()>0){
+        int s=dq.size();
+        if(i%2!=0){
+            while(s-->0){
+                Node*a=dq.front();
+                v.push_back(a->data);
+                dq.pop_front();
+                if(a->right!=NULL){
+                    dq.push_back(a->right);
+                }
+                if(a->left!=NULL){
+                    dq.push_back(a->left);
+                }
+            }
+            i++;
+        }else{
+             while(s-->0){
+                Node*a=dq.back();
+                v.push_back(a->data);
+                dq.pop_back();
+                if(a->left!=NULL){
+                    dq.push_front(a->left);
+                }
+                if(a->right!=NULL){
+                    dq.push_front(a->right);
+                }
+            }
+            i++;
+        }
+        
+    }
+    return v;
+}
