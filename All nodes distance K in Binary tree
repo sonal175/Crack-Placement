@@ -50,3 +50,59 @@
         }
         return v;
     }
+    
+    
+    
+    
+    // sol 2
+    
+    vector<int> ans;
+    void dfs(TreeNode* node, int depth, int k) {
+        
+        if (!node) {
+            return;
+        }
+        
+        if (depth == k) {
+            ans.push_back(node->val);
+            return;
+        }
+        
+        dfs(node->left, depth+1, k);
+        dfs(node->right, depth+1, k);
+    }
+    
+    int go(TreeNode* node, TreeNode* target, int k) {
+        if (!node) {
+            return INT_MAX;
+        }    
+        
+        if (node == target) {
+            dfs(node, 0, k);
+            return 1;
+        }
+        
+        int left = go(node->left, target, k);
+        if (left != INT_MAX) {
+            if (left == k) {
+                ans.push_back(node->val);
+            }
+            dfs(node->right, left + 1, k);
+            return left + 1;
+        }
+        int right = go(node->right, target, k);
+        if (right != INT_MAX) {
+            if (right == k) {;
+                ans.push_back(node->val);
+            }
+            dfs(node->left, right + 1, k);
+            return right + 1;
+        }
+        
+        return INT_MAX;
+    }
+    vector<int> distanceK(TreeNode* root, TreeNode* target, int k) {
+        go(root, target, k);
+        
+        return ans;
+    }
